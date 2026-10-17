@@ -1,0 +1,3 @@
+#!/bin/sh
+# Stand-in for pkg-config: libpng is found via CPATH/LIBRARY_PATH instead.
+exit 0

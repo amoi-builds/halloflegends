@@ -1,0 +1,10 @@
+# Recreated by the scripts in scripts/ (see README).
+
+# scripts/setup-macos.sh
+/.toolchain/
+# scripts/get-expansion.sh (pokeemerald-expansion + patches/)
+/pokeemerald-expansion/
+
+*.gba
+*.sav
+.DS_Store
