@@ -19,32 +19,50 @@ battle style, your trainer(s) and your opponent(s), and go.
 - Pokémon from Generations 1–4 with Generation 4 battle mechanics.
 - No money, no bag: only a small healing kit during Elite Four runs.
 
-## Building
+## Play
+
+On a Mac with git, Python 3 and the Xcode Command Line Tools
+(`xcode-select --install`):
+
+```sh
+git clone https://github.com/amoi-builds/halloflegends.git
+cd halloflegends
+scripts/play.sh
+```
+
+The first run downloads the tools and builds the game on your computer
+(about 1 GB and 5–10 minutes), then opens it in your browser at
+http://localhost:8080. After that, `scripts/play.sh` starts in seconds.
+Nothing is hosted online: the game runs in your browser, served from your own
+computer, on the mGBA emulator.
+
+**Controls:** arrow keys, <kbd>X</kbd> = A, <kbd>Z</kbd> = B,
+<kbd>Enter</kbd> = Start, <kbd>Right Shift</kbd> = Select (the credits, on the
+battle style screen). On a phone or tablet, use the on-screen buttons.
+
+**Linux / Windows (WSL):** install the toolchain as described in the
+expansion's [INSTALL.md](https://github.com/rh-hideout/pokeemerald-expansion/blob/master/INSTALL.md)
+(devkitARM or `arm-none-eabi-gcc`, plus `libpng`), then run `scripts/play.sh`.
+
+**Prefer a desktop emulator?** The built game is
+`pokeemerald-expansion/pokefirered.gba`; open it in mGBA or any GBA emulator.
+
+## How it works
 
 This repository only holds Hall of Legends' own changes, as a patch to
-[pokeemerald-expansion](https://github.com/rh-hideout/pokeemerald-expansion).
-The scripts download the expansion at a pinned commit, apply the patch, and
-build the game. No ROM is needed: the whole game builds from source.
-
-**macOS** (no Homebrew or devkitARM needed; git, Python 3 and the Xcode
-Command Line Tools must be installed):
+[pokeemerald-expansion](https://github.com/rh-hideout/pokeemerald-expansion),
+plus the browser player in `web/`. `scripts/play.sh` runs these steps, which
+also work one by one:
 
 ```sh
-scripts/setup-macos.sh    # one time: ARM compiler, libpng, GNU make into .toolchain/ (~1 GB)
+scripts/setup-macos.sh    # macOS only: ARM compiler, libpng, GNU make into .toolchain/
 scripts/get-expansion.sh  # pokeemerald-expansion at the pinned commit + the patch
-scripts/build.sh          # builds pokeemerald-expansion/pokefirered.gba
+scripts/build.sh          # builds pokeemerald-expansion/pokefirered.gba (+ web/game/)
+scripts/fetch-vendor.sh   # the browser emulator (Nostalgist + mGBA) into web/vendor/
+scripts/serve.py          # serves web/ at http://localhost:8080 and opens it
 ```
 
-**Linux / Windows (WSL)**: install the toolchain as described in the
-expansion's [INSTALL.md](https://github.com/rh-hideout/pokeemerald-expansion/blob/master/INSTALL.md),
-then:
-
-```sh
-scripts/get-expansion.sh
-make -C pokeemerald-expansion firered
-```
-
-Open `pokeemerald-expansion/pokefirered.gba` in mGBA or any GBA emulator.
+No ROM is needed: the whole game builds from source.
 
 ### Making changes
 
@@ -66,10 +84,14 @@ expansion), then run `scripts/save-patch.sh` to write every change to
   - Silver: Nx-Kun, mufasakong, Dragoon
   - Dawn: Kaori
   - Barry: Gridiron, Eevee, Zhen Lin, pika, Pipian
+- Browser player: [Nostalgist.js](https://github.com/arianrhodsandlot/nostalgist)
+  and [mGBA](https://github.com/mgba-emu/mgba)'s libretro core; see
+  [web/licenses.txt](web/licenses.txt).
 
 ## Disclaimer
 
 This is a non-commercial fan project and is not affiliated with Nintendo,
 Game Freak or The Pokémon Company. Pokémon and all related names and
 characters are trademarks of their respective owners. This repository
-doesn't include pokeemerald-expansion, pret's decompilations or a built ROM.
+doesn't include pokeemerald-expansion, pret's decompilations or a built ROM:
+the scripts download the source and build the game on your computer.

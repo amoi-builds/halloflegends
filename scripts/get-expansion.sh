@@ -22,4 +22,4 @@ git -C "$GAME_DIR" fetch -q --depth 1 RHH "$RHH_COMMIT"
 git -C "$GAME_DIR" checkout -q FETCH_HEAD
 echo ">> Applying $(basename "$PATCH")"
 git -C "$GAME_DIR" apply --whitespace=nowarn "$PATCH"
-echo "Done. Build with: scripts/build.sh"
+echo "Done. Build with: scripts/build.sh (or scripts/play.sh to build and play)"

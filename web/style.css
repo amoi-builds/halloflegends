@@ -1,0 +1,438 @@
+@font-face {
+  font-family: 'Pixelify Sans';
+  src: url('vendor/pixelify-sans.woff2') format('woff2');
+  font-weight: 400 700;
+  font-display: swap;
+}
+
+/* The character select screen's colors: your side red, the opponents' side blue,
+   black between them. FireRed crimson marks the actions that start play. */
+:root {
+  --paper: #f4f1ea;
+  --ink: #23202b;
+  --stone: #6b6573;
+  --rule: #d9d3c7;
+  --bezel: #17161d;
+  --night: #0d0c12;
+  --crimson: #c8242f;
+  --crimson-deep: #96161f;
+  --you: #7d1d2b;
+  --you-dark: #661723;
+  --them: #22448b;
+  --them-dark: #1b3772;
+  --on-dark: #f6f3ec;
+
+  --page: var(--paper);
+  --text: var(--ink);
+  --muted: var(--stone);
+  --line: var(--rule);
+
+  --font-pixel: 'Pixelify Sans', system-ui, sans-serif;
+  --font-body: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+
+  --column: 736px; /* the 720px (3x) screen plus its bezel */
+  --gutter: 16px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --page: #121117;
+    --text: #e8e4dc;
+    --muted: #a39dab;
+    --line: #2d2b35;
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--text);
+  font: 16px/1.55 var(--font-body);
+}
+
+a { color: inherit; text-underline-offset: 3px; }
+
+[hidden] { display: none !important; }
+
+:focus-visible {
+  outline: 3px solid var(--crimson);
+  outline-offset: 3px;
+}
+
+.app {
+  max-width: calc(var(--column) + 2 * var(--gutter));
+  margin: 0 auto;
+  padding: 40px var(--gutter) 48px;
+}
+
+/* Masthead ----------------------------------------------------------------- */
+
+.masthead { margin-bottom: 24px; }
+
+.tagline {
+  margin: 10px 0 0;
+  max-width: 46ch;
+  color: var(--muted);
+}
+
+.title {
+  margin: 0;
+  font: 700 60px/1 var(--font-pixel);
+  letter-spacing: -1px;
+}
+
+/* Screen ------------------------------------------------------------------- */
+
+.bezel {
+  padding: 8px;
+  background: var(--bezel);
+  border-radius: 14px;
+}
+
+.screen {
+  position: relative;
+  aspect-ratio: 3 / 2;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 6px;
+  background: #000;
+  container-type: size; /* the title card scales with the screen (cqh units) */
+}
+
+/* Nostalgist sets inline sizes on the canvas; the screen box decides the real size. */
+.game-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  image-rendering: pixelated;
+}
+
+.card {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  padding: 24px;
+  text-align: center;
+  color: var(--on-dark);
+  background: var(--night);
+}
+
+.app[data-state="title"] .card-title,
+.app[data-state="loading"] .card-loading,
+.app[data-state="error"] .card-error { display: flex; }
+
+.card-heading {
+  position: relative;
+  margin: 0;
+  font: 500 26px/1.2 var(--font-pixel);
+}
+
+.card-note {
+  position: relative;
+  max-width: 34ch;
+  margin: 0;
+  font-size: 15px;
+  color: #c9c3ba;
+}
+
+/* Title card: your trainer against an opponent, like the character select screen. */
+.card-title { gap: 6cqh; padding: 6cqh 4cqh; }
+
+.versus {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14cqw;
+  width: 100%;
+  height: 52cqh;
+}
+
+.side {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  border-radius: 4px;
+}
+
+.side-you { background: repeating-linear-gradient(135deg, var(--you) 0 10px, var(--you-dark) 10px 20px); }
+.side-them { background: repeating-linear-gradient(135deg, var(--them) 0 10px, var(--them-dark) 10px 20px); }
+
+.trainer {
+  height: 92%;
+  width: auto;
+  image-rendering: pixelated;
+}
+
+/* Trainer pics face left: mirror yours so the two face each other. */
+.trainer-you { transform: scaleX(-1); }
+
+.vs {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font: 700 max(22px, 11cqh)/1 var(--font-pixel);
+  color: var(--on-dark);
+}
+
+.card-title .button-play {
+  padding: max(10px, 2.6cqh) max(28px, 9cqh);
+  font-size: max(18px, 6cqh);
+}
+
+.meter {
+  width: min(320px, 70%);
+  height: 10px;
+  padding: 2px;
+  border: 2px solid #8a8494;
+  border-radius: 3px;
+}
+
+.meter-fill {
+  width: 0;
+  height: 100%;
+  background: var(--crimson);
+  transition: width 0.2s linear;
+}
+
+/* Buttons ------------------------------------------------------------------ */
+
+.button {
+  font: 600 18px/1 var(--font-pixel);
+  padding: 12px 20px;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  color: inherit;
+  background: none;
+}
+
+.button:disabled { cursor: default; opacity: 0.45; }
+
+.button-play {
+  position: relative;
+  padding: 16px 44px;
+  font-size: 26px;
+  color: #fff;
+  background: var(--crimson);
+  border-color: var(--crimson-deep);
+  box-shadow: 0 4px 0 var(--crimson-deep);
+}
+
+.button-play:hover { background: #dc3540; }
+.button-play:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--crimson-deep); }
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.button-run {
+  color: #fff;
+  background: var(--crimson);
+  border-color: var(--crimson-deep);
+}
+
+.button-run:not(:disabled):hover { background: #dc3540; }
+
+.button-quiet {
+  border-color: var(--line);
+}
+
+.button-quiet:not(:disabled):hover { border-color: var(--muted); }
+
+/* Touch controls (phones and tablets only) ---------------------------------- */
+
+.pad {
+  display: none;
+  grid-template-columns: 1fr auto;
+  grid-template-areas: "dpad face" "meta meta";
+  align-items: center;
+  gap: 18px 12px;
+  margin-top: 18px;
+  padding: 18px 12px 8px;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+@media (pointer: coarse) {
+  .pad { display: grid; }
+}
+
+.dpad {
+  grid-area: dpad;
+  position: relative;
+  width: 144px;
+  height: 144px;
+  touch-action: none;
+}
+
+.dpad-arm {
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  background: var(--bezel);
+}
+
+.dpad-up { left: 48px; top: 0; border-radius: 8px 8px 0 0; }
+.dpad-down { left: 48px; bottom: 0; border-radius: 0 0 8px 8px; }
+.dpad-left { left: 0; top: 48px; border-radius: 8px 0 0 8px; }
+.dpad-right { right: 0; top: 48px; border-radius: 0 8px 8px 0; }
+.dpad-center { left: 48px; top: 48px; }
+
+.dpad[data-dir="up"] .dpad-up,
+.dpad[data-dir="down"] .dpad-down,
+.dpad[data-dir="left"] .dpad-left,
+.dpad[data-dir="right"] .dpad-right { background: var(--crimson); }
+
+.face {
+  grid-area: face;
+  display: flex;
+  gap: 16px;
+  padding-right: 4px;
+}
+
+.pad-button {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  border: none;
+  font: 700 24px/1 var(--font-body);
+  color: var(--on-dark);
+  background: var(--bezel);
+  touch-action: none;
+}
+
+.pad-a { transform: translateY(-22px); }
+
+.pad-button.is-down,
+.pad-pill.is-down { background: var(--crimson); }
+
+.meta {
+  grid-area: meta;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.pad-pill {
+  padding: 8px 18px;
+  border: none;
+  border-radius: 999px;
+  font: 600 15px/1 var(--font-pixel);
+  color: var(--on-dark);
+  background: var(--stone);
+  touch-action: none;
+}
+
+/* Full screen: the console fills the display, screen as large as fits. */
+.console:fullscreen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 16px;
+  background: var(--bezel);
+  color: var(--on-dark);
+}
+
+.console:fullscreen .bezel {
+  width: min(100%, calc((100vh - 120px) * 1.5));
+  margin: 0 auto;
+  padding: 0;
+}
+
+.console:fullscreen .toolbar { justify-content: center; }
+.console:fullscreen .button-quiet { border-color: #3d3a47; }
+
+@media (pointer: coarse) {
+  .console:fullscreen .bezel { width: min(100%, calc((100vh - 360px) * 1.5)); }
+}
+
+/* Guide -------------------------------------------------------------------- */
+
+.guide {
+  margin-top: 40px;
+  padding-top: 28px;
+  border-top: 2px solid var(--line);
+}
+
+.guide-heading {
+  margin: 0 0 12px;
+  font: 600 21px/1.2 var(--font-pixel);
+}
+
+.guide-heading + .guide-text { margin-top: 0; }
+
+.guide-text {
+  max-width: 64ch;
+  margin: 0 0 28px;
+}
+
+.keys { margin: 0; max-width: 34em; }
+
+.keys div {
+  display: grid;
+  grid-template-columns: 9.5em 1fr;
+  gap: 12px;
+  align-items: baseline;
+  padding: 6px 0;
+}
+
+.keys dt { display: flex; flex-wrap: wrap; gap: 4px; }
+.keys dd { margin: 0; }
+
+kbd {
+  display: inline-block;
+  min-width: 1.9em;
+  padding: 2px 6px;
+  border: 2px solid var(--line);
+  border-bottom-width: 4px;
+  border-radius: 6px;
+  font: 600 14px/1.3 var(--font-pixel);
+  text-align: center;
+}
+
+.guide-note {
+  margin: 12px 0 0;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+/* Footer: the fan-project disclaimer, licenses and source. */
+
+.footer {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 2px solid var(--line);
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.footer p { margin: 0 0 8px; max-width: 64ch; }
+.footer p:last-child { margin-bottom: 0; }
+
+/* Small screens ------------------------------------------------------------ */
+
+@media (max-width: 640px) {
+  .app { padding-top: 24px; }
+  .title { font-size: 44px; }
+  .bezel { padding: 5px; border-radius: 10px; }
+  .card-loading, .card-error { gap: 12px; padding: 16px; }
+  .card-heading { font-size: 20px; }
+  .card-note { font-size: 13px; }
+  .card-error .button-play { padding: 12px 32px; font-size: 22px; }
+  .toolbar .button { padding: 10px 14px; font-size: 16px; }
+}

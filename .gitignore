@@ -4,6 +4,10 @@
 /.toolchain/
 # scripts/get-expansion.sh (pokeemerald-expansion + patches/)
 /pokeemerald-expansion/
+# scripts/fetch-vendor.sh
+/web/vendor/
+# scripts/build.sh: the browser copy of the built game. Don't commit it.
+/web/game/
 
 *.gba
 *.sav

@@ -91,11 +91,14 @@ if [ ! -x "$TC/make/bin/make" ]; then
   actual="$(shasum -a 256 "$src.tar.gz" | awk '{print $1}')"
   [ "$MAKE_SHA256" = "$actual" ] || { echo "Checksum mismatch for make-$MAKE_VER"; exit 1; }
   tar -xzf "$src.tar.gz" -C "$TC/downloads"
-  (cd "$src" && ./configure --prefix="$TC/make" --disable-nls >/dev/null && ./build.sh >/dev/null)
+  # Its compiler warnings are harmless; keep them in a log unless the build fails.
+  (cd "$src" && ./configure --prefix="$TC/make" --disable-nls && ./build.sh) > "$src.log" 2>&1 ||
+    { tail -20 "$src.log"; echo "Building GNU make failed (full log: $src.log)"; exit 1; }
   mkdir -p "$TC/make/bin"
   cp "$src/make" "$TC/make/bin/make"
 fi
 "$TC/make/bin/make" --version | head -1
 
 echo
-echo "Toolchain ready. Build with: scripts/build.sh"
+echo "Toolchain ready. Next: scripts/get-expansion.sh, then scripts/build.sh"
+echo "(or just scripts/play.sh, which does every step and opens the game)."

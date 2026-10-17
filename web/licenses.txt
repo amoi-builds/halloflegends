@@ -1,0 +1,34 @@
+Hall of Legends: third-party software and content
+=================================================
+
+Pokémon FireRed (the ROM in game/, built on your computer)
+  Built from pokeemerald-expansion by RHH (Rom Hacking Hideout),
+  https://github.com/rh-hideout/pokeemerald-expansion, which is built on
+  pret's community decompilations (https://github.com/pret), with Hall of
+  Legends' changes. Pokémon and all game content are © Nintendo, Creatures
+  Inc. and GAME FREAK inc. This is a free, unofficial fan project, not
+  affiliated with or endorsed by them or The Pokémon Company.
+
+Trainer sprites, from The Spriters Resource (https://www.spriters-resource.com/)
+  Ethan: FourLeafSunny
+  Cynthia: lichen
+  Silver: Nx-Kun, mufasakong, Dragoon
+  Dawn: Kaori
+  Barry: Gridiron, Eevee, Zhen Lin, pika, Pipian
+
+mGBA libretro core (vendor/mgba_libretro.js, vendor/mgba_libretro.wasm)
+  mGBA by Vicki Pfau and contributors, Mozilla Public License 2.0:
+  https://github.com/mgba-emu/mgba
+  Built for the browser as part of RetroArch (GNU GPL v3):
+  https://github.com/libretro/RetroArch
+  Build used: https://github.com/arianrhodsandlot/retroarch-emscripten-build
+  (release v1.22.2). Source code for these binaries is available at the links
+  above.
+
+Nostalgist.js (vendor/nostalgist.js)
+  MIT License, see vendor/nostalgist.LICENSE.txt
+  https://github.com/arianrhodsandlot/nostalgist
+
+Pixelify Sans (vendor/pixelify-sans.woff2)
+  SIL Open Font License 1.1, see vendor/pixelify-sans.OFL.txt
+  https://github.com/eifetx/Pixelify-Sans
