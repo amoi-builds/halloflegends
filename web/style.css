@@ -5,8 +5,7 @@
   font-display: swap;
 }
 
-/* The character select screen's colors: your side red, the opponents' side blue,
-   black between them. FireRed crimson marks the actions that start play. */
+/* A dark screen on warm paper; FireRed crimson marks the actions that start play. */
 :root {
   --paper: #f4f1ea;
   --ink: #23202b;
@@ -16,10 +15,6 @@
   --night: #0d0c12;
   --crimson: #c8242f;
   --crimson-deep: #96161f;
-  --you: #7d1d2b;
-  --you-dark: #661723;
-  --them: #22448b;
-  --them-dark: #1b3772;
   --on-dark: #f6f3ec;
 
   --page: var(--paper);
@@ -73,11 +68,6 @@ a { color: inherit; text-underline-offset: 3px; }
 
 .masthead { margin-bottom: 24px; }
 
-.tagline {
-  margin: 10px 0 0;
-  max-width: 46ch;
-  color: var(--muted);
-}
 
 .title {
   margin: 0;
@@ -144,46 +134,7 @@ a { color: inherit; text-underline-offset: 3px; }
   color: #c9c3ba;
 }
 
-/* Title card: your trainer against an opponent, like the character select screen. */
-.card-title { gap: 6cqh; padding: 6cqh 4cqh; }
-
-.versus {
-  position: relative;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14cqw;
-  width: 100%;
-  height: 52cqh;
-}
-
-.side {
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  border-radius: 4px;
-}
-
-.side-you { background: repeating-linear-gradient(135deg, var(--you) 0 10px, var(--you-dark) 10px 20px); }
-.side-them { background: repeating-linear-gradient(135deg, var(--them) 0 10px, var(--them-dark) 10px 20px); }
-
-.trainer {
-  height: 92%;
-  width: auto;
-  image-rendering: pixelated;
-}
-
-/* Trainer pics face left: mirror yours so the two face each other. */
-.trainer-you { transform: scaleX(-1); }
-
-.vs {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  font: 700 max(22px, 11cqh)/1 var(--font-pixel);
-  color: var(--on-dark);
-}
-
+/* Title card: just the Play button. */
 .card-title .button-play {
   padding: max(10px, 2.6cqh) max(28px, 9cqh);
   font-size: max(18px, 6cqh);
@@ -374,12 +325,6 @@ a { color: inherit; text-underline-offset: 3px; }
   font: 600 21px/1.2 var(--font-pixel);
 }
 
-.guide-heading + .guide-text { margin-top: 0; }
-
-.guide-text {
-  max-width: 64ch;
-  margin: 0 0 28px;
-}
 
 .keys { margin: 0; max-width: 34em; }
 
@@ -405,24 +350,7 @@ kbd {
   text-align: center;
 }
 
-.guide-note {
-  margin: 12px 0 0;
-  font-size: 14px;
-  color: var(--muted);
-}
 
-/* Footer: the fan-project disclaimer, licenses and source. */
-
-.footer {
-  margin-top: 40px;
-  padding-top: 20px;
-  border-top: 2px solid var(--line);
-  font-size: 13px;
-  color: var(--muted);
-}
-
-.footer p { margin: 0 0 8px; max-width: 64ch; }
-.footer p:last-child { margin-bottom: 0; }
 
 /* Small screens ------------------------------------------------------------ */
 

@@ -51,9 +51,6 @@ if [ "$#" -eq 0 ] && [ "$GAME" = firered ]; then
   # rest of the cartridge is padding) and unpacks it in the browser.
   mkdir -p "$ROOT/web/game"
   gzip -9 -n -c "$GAME_DIR/pokefirered.gba" > "$ROOT/web/game/halloflegends.gba.gz"
-  # Two trainer pics from the game's graphics for the title card.
-  cp "$GAME_DIR/graphics/trainers/front_pics/red.png" "$ROOT/web/game/red.png"
-  cp "$GAME_DIR/graphics/trainers/front_pics/hol_cynthia.png" "$ROOT/web/game/cynthia.png"
   echo
   echo "Built pokeemerald-expansion/pokefirered.gba"
   [ -n "${HOL_PLAY:-}" ] || echo "Browser copy: web/game/halloflegends.gba.gz (play it with scripts/serve.py)"

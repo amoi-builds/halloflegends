@@ -1,4 +1,4 @@
-// Page controller: the title card, the emulator, and the toolbar and touch
+// Page controller: the Play button, the emulator, and the toolbar and touch
 // controls. The whole game is the ROM; this file only downloads and starts it.
 import { Nostalgist } from './vendor/nostalgist.js';
 import { loadGameFiles } from './game-files.js';
@@ -47,31 +47,6 @@ function setState(state) {
   ui.sound.disabled = !playing;
   ui.fullscreen.disabled = !playing || !document.fullscreenEnabled;
 }
-
-// --- Title card ------------------------------------------------------------------
-
-// The trainer pics come straight from the game's graphics, where the
-// background is a solid color (palette slot 0): clear the pixels that match
-// the top-left corner.
-async function drawTrainer(canvas) {
-  const img = new Image();
-  img.src = canvas.dataset.src;
-  try {
-    await img.decode();
-  } catch {
-    return; // the card works without them
-  }
-  const ctx = canvas.getContext('2d');
-  ctx.drawImage(img, 0, 0);
-  const data = ctx.getImageData(0, 0, canvas.width, canvas.height);
-  const px = data.data;
-  const [r, g, b] = px;
-  for (let i = 0; i < px.length; i += 4) {
-    if (px[i] === r && px[i + 1] === g && px[i + 2] === b) px[i + 3] = 0;
-  }
-  ctx.putImageData(data, 0, 0);
-}
-document.querySelectorAll('canvas.trainer').forEach(drawTrainer);
 
 // --- Running the game --------------------------------------------------------------
 

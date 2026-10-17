@@ -15,18 +15,12 @@
   <main class="app" data-state="title">
     <header class="masthead">
       <h1 class="title">Hall of Legends</h1>
-      <p class="tagline">Pick a trainer from the first four generations and battle the others in the Pokémon League.</p>
     </header>
 
     <section class="console" id="console" aria-label="Game">
       <div class="bezel">
         <div class="screen" id="screen">
           <div class="card card-title">
-            <div class="versus" aria-hidden="true">
-              <div class="side side-you"><canvas class="trainer trainer-you" data-src="game/red.png" width="64" height="64"></canvas></div>
-              <div class="side side-them"><canvas class="trainer" data-src="game/cynthia.png" width="64" height="64"></canvas></div>
-              <span class="vs">VS</span>
-            </div>
             <button class="button button-play" id="play" type="button">Play</button>
           </div>
           <div class="card card-loading" role="status" aria-live="polite">
@@ -67,8 +61,6 @@
     </section>
 
     <section class="guide">
-      <h2 class="guide-heading">How to play</h2>
-      <p class="guide-text">Press Start on the title screen. Pick a battle style (singles, doubles or a tag battle), your trainer, then your opponent: one of the others, a random one, or the Elite Four, five trainers in a row. Every team is level 100.</p>
       <h2 class="guide-heading">Keyboard</h2>
       <dl class="keys">
         <div><dt><kbd>←</kbd><kbd>↑</kbd><kbd>↓</kbd><kbd>→</kbd></dt><dd>Move the cursor, walk</dd></div>
@@ -77,13 +69,7 @@
         <div><dt><kbd>Enter</kbd></dt><dd>Start</dd></div>
         <div><dt><kbd>Right Shift</kbd></dt><dd>Select: credits, on the battle style screen</dd></div>
       </dl>
-      <p class="guide-note">On a phone or tablet, use the buttons under the screen.</p>
     </section>
-
-    <footer class="footer">
-      <p>Hall of Legends is a free, unofficial fan project. It isn't affiliated with or endorsed by Nintendo, Creatures Inc., GAME FREAK inc. or The Pokémon Company. Pokémon and all game content are © Nintendo, Creatures Inc. and GAME FREAK inc.</p>
-      <p><a href="licenses.txt">Licenses and credits</a> · <a href="https://github.com/amoi-builds/halloflegends">Source</a></p>
-    </footer>
   </main>
 </body>
 </html>
