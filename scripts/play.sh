@@ -9,6 +9,7 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
+export HOL_PLAY=1  # the step scripts skip their "next, run ..." hints
 
 if [ "$(uname)" = Darwin ] && { [ ! -x .toolchain/arm-none-eabi/bin/arm-none-eabi-gcc ] ||
     [ ! -x .toolchain/make/bin/make ] || [ ! -f .toolchain/libpng/lib/libpng.a ]; }; then

@@ -56,5 +56,5 @@ if [ "$#" -eq 0 ] && [ "$GAME" = firered ]; then
   cp "$GAME_DIR/graphics/trainers/front_pics/hol_cynthia.png" "$ROOT/web/game/cynthia.png"
   echo
   echo "Built pokeemerald-expansion/pokefirered.gba"
-  echo "Browser copy: web/game/halloflegends.gba.gz (play it with scripts/serve.py)"
+  [ -n "${HOL_PLAY:-}" ] || echo "Browser copy: web/game/halloflegends.gba.gz (play it with scripts/serve.py)"
 fi

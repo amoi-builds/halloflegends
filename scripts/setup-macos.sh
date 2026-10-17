@@ -99,6 +99,8 @@ if [ ! -x "$TC/make/bin/make" ]; then
 fi
 "$TC/make/bin/make" --version | head -1
 
-echo
-echo "Toolchain ready. Next: scripts/get-expansion.sh, then scripts/build.sh"
-echo "(or just scripts/play.sh, which does every step and opens the game)."
+if [ -z "${HOL_PLAY:-}" ]; then  # scripts/play.sh goes on by itself
+  echo
+  echo "Toolchain ready. Next: scripts/get-expansion.sh, then scripts/build.sh"
+  echo "(or just scripts/play.sh, which does every step and opens the game)."
+fi
